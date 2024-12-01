@@ -14,6 +14,12 @@ let ``template`` () =
 [<Fact>]
 let ``D01`` () =
     let input = """
+3   4
+4   3
+2   5
+1   3
+3   9
+3   3
 """
     let pt1 = D01.part1 input
     Assert.Equal(0, pt1)
