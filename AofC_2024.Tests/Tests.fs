@@ -37,6 +37,6 @@ let ``D02`` () =
 1 3 6 7 9
 """
     Assert.Equal(2, D02.part1 input)
-    //Assert.Equal(0, D02.part2 input)
+    Assert.Equal(4, D02.part2 input)
 
 
