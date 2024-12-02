@@ -1,4 +1,4 @@
-# AofC_2023
+# AofC_2024
 
 Learning F# by doing [AdventOfCode 2024](https://adventofcode.com/2024)
 

@@ -1,0 +1,43 @@
+name: .NET
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 9.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+    - name: Github credentials
+      run: |
+        git config --global user.email "jonas.beckeman@gmail.com"
+        git config --global user.name "GitHub Action"
+    - name: If develop, merge to main
+      if: contains(github.ref, 'develop')
+      # make sure to enable Settings -> Actions -> General -> Workflow permissions -> Read and write permissions
+      run: |
+        git fetch --unshallow
+        git checkout main
+        git pull
+        git merge --no-ff develop -m "Auto-merge develop to main"
+    - name: Create README
+      run: |
+        dotnet run --project ./AofC_2024/AofC_2024.fsproj -- generate_readme
+        git commit README.md -m 'Re-build README.md' || echo "No changes to commit"
+        git push origin || echo "No changes to commit"
+
