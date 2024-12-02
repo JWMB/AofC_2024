@@ -21,6 +21,6 @@ let ``D01`` () =
 3   9
 3   3
 """
-    let pt1 = D01.part1 input
-    Assert.Equal(0, pt1)
+    Assert.Equal(11, D01.part1 input)
+    Assert.Equal(31, D01.part2 input)
 
