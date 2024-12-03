@@ -88,3 +88,38 @@ let part2 input =
 ```
 
 Result (in `9`ms): `674`
+## [Day 3 : Mull It Over](https://adventofcode.com/2024/day/3)
+[Source](/AofC_2024/Days/D03.fs) | [Input](/AofC_2024/Days/D03.txt)  
+### part1
+```FSharp
+let part1 input =
+    let expressions = Regex.Matches(input, @"(?<op>mul)\((?<args>(\d{1,3}),){1,}(?<argl>\d{1,3})\)")
+
+    let calls = expressions |> Seq.map parseMatch |> Seq.toArray
+    let results = calls
+                    |> Array.map (fun o -> o.execute)
+                    |> Array.choose (function | Value v -> Some(v) | _ -> None)
+    let result = results |> Array.sum
+    result
+```
+
+Result (in `10`ms): `175700056`
+### part2
+```FSharp
+let part2 input =
+    let expressions = Regex.Matches(input, @"(?<op>mul|do|don't)\((?<args>(\d{1,3}),)*(?<argl>\d{1,3})?\)")
+    let calls = expressions |> Seq.map parseMatch |> Seq.toArray
+
+    let aggregate =
+        ( {| Enabled = true; Value = 0 |}, calls)
+            ||> Array.fold (fun acc call -> 
+                let result = call.execute
+                match result with
+                | Enabled e -> {| Enabled = e; Value = acc.Value |}
+                | Value v -> {| Enabled = acc.Enabled; Value = acc.Value + if acc.Enabled then v else 0 |}
+            )
+    let result = aggregate.Value
+    result
+```
+
+Result (in `4`ms): `71668682`
