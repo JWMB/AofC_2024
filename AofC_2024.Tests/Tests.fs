@@ -53,3 +53,23 @@ xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))
 xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))
 """
     Assert.Equal(48, D03.part2 input)
+
+
+[<Fact>]
+let ``D04`` () =
+    let input = """
+MMMSXXMASM
+MSAMXMSMSA
+AMXSXMAAMM
+MSAMASMSMX
+XMASAMXAMM
+XXAMMXXAMA
+SMSMSASXSS
+SAXAMASAAA
+MAMMMXMMMM
+MXMXAXMASX
+"""
+    Assert.Equal(18, D04.part1 input)
+    Assert.Equal(9, D04.part2 input)
+
+
